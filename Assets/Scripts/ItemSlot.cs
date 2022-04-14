@@ -4,17 +4,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class ItemSlot : MonoBehaviour, IDropHandler{
-    [SerializeField] public GameObject ObjectAttached;
+    public GameObject myChild;
+
     public void OnDrop(PointerEventData eventData){
         if (eventData.pointerDrag != null){
-            //Якорение dragging объекта
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-            ObjectAttached = eventData.pointerDrag;
-           // DINDropChecker(eventData);
-           // eventData.pointerDrag.transform.SetParent(this.transform, false);
-            Debug.Log(this.transform);
+
+            myChild = eventData.pointerDrag;
+            myChild.GetComponent<DragDrop>().myParent = gameObject;
+
         }
     }
+
     public void DINDropChecker(PointerEventData eventData){
         switch(eventData.pointerDrag.name){
             case "PS60B":
